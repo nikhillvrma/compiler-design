@@ -1,0 +1,46 @@
+Variable Declaration Grammar
+
+<declaration> ::= <type> <id_list> ";"
+<type> ::= "int" | "float" | "char"
+<id_list> ::= id <id_tail>
+<id_tail> ::= "," id <id_tail>
+            | "=" <expr> <id_tail>
+            | ε
+<expr> ::= id | num
+
+✅ Valid Derived Strings
+
+1️⃣ Simple Declaration
+    int a;
+    <declaration>
+    → <type> <id_list> ;
+    → int <id_list> ;
+    → int id <id_tail> ;
+    → int a ε ;
+    → int a ;
+
+2️⃣ Multiple Variables
+    int a, b;
+    <declaration>
+    → int <id_list> ;
+    → int id <id_tail> ;
+    → int a , id <id_tail> ;
+    → int a , b ε ;
+    → int a, b ;
+
+3️⃣ Initialization
+    int a = 5;
+    <declaration>
+    → int <id_list> ;
+    → int id <id_tail> ;
+    → int a = <expr> <id_tail> ;
+    → int a = num ε ;
+    → int a = 5 ;
+
+4️⃣ Using Identifier in Expression
+    char c = a;
+    <declaration>
+    → char <id_list> ;
+    → char c = <expr> <id_tail> ;
+    → char c = id ε ;
+    → char c = a ;
